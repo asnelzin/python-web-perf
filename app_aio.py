@@ -1,8 +1,13 @@
 import json
-from aiohttp import web
-import aiopg
+import os
 
-from async_db import get_row
+from aiohttp import web
+
+if os.getenv('USE_ASYNCPG', False):
+    from async_db_asyncpg import get_row
+else:
+    from async_db import get_row
+
 
 async def handle(request):
     a, b = await get_row()
